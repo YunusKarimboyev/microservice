@@ -1,0 +1,3 @@
+[submodule "test_microservice/protos"]
+	path = test_microservice/protos
+	url = https://gitlab.com/go_bootcamp7/protos.git
