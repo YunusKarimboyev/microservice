@@ -33,6 +33,6 @@ func New(cfg config.Config) (*ServiceManager, error) {
 
 }
 
-func (s *ServiceManager) User() cu.PostServiceClient {
+func (s *ServiceManager) Post() cu.PostServiceClient {
   return s.postService
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net"
 
 	"github.com/double/test_microservice/config"
@@ -8,6 +9,7 @@ import (
 	"github.com/double/test_microservice/pkg/db"
 	"github.com/double/test_microservice/pkg/logger"
 	"github.com/double/test_microservice/service"
+	grpcclient "github.com/double/test_microservice/service/grpc-client"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -22,7 +24,12 @@ func main() {
 		log.Fatal("Error connect postgres", logger.Error(err))
 	}
 
-	userService := service.NewUserService(connDb, log)
+	grpcClient, err := grpcclient.New(cfg)
+	if err != nil {
+		fmt.Println("Error connect grpc client: ", err.Error())
+	}
+
+	userService := service.NewUserService(connDb, log, grpcClient)
 
 	lis, err := net.Listen("tcp", cfg.UserServicePort)
 
